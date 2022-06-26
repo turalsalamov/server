@@ -9,7 +9,7 @@ int main() {
     // Declearing the variables
     int socketH, port;
     addressStruct address, clientAddress;
-    struct msghdr message;
+    char buffer[1024] = {0};
 
     // Getting the port number in order to bind it with socket listen incoming requests
     printf("Specify the port number: ");
@@ -32,8 +32,14 @@ int main() {
                 printf("[+] The socket is listening for connection...\n");
                 
                 while (1) {
-                    if (recvmsg(socketH, (struct msghdr *) &message, 0) >= 0) {
-                        printf("%s", message.msg_name);
+                    int socketForTransfer = accept(socketH, NULL, NULL);
+                    if (socketForTransfer >= 0) {
+                        printf("[+] Socket for data transfer is created!");
+                        int reading = read(socketForTransfer, buffer, 1024);
+                        printf("%s\n", buffer);
+                        send(socketForTransfer, "Hello", 5, 0);
+                        printf("[+] Message is sent...\n");
+                        close(socketForTransfer);
                     }
                 }    
             } else {
