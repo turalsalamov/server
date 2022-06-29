@@ -6,9 +6,19 @@
 
 int main() {
 
+/*
+    The dedicated port will be also assigned with protocol and the validation will be handled in 
+    protocols.c
+*/
+
+
+
     // Declearing the variables
     int socketH, port;
     addressStruct address, clientAddress;
+    address.sin_family = AF_INET;
+    address.sin_port = htons(port);
+    address.sin_addr.s_addr = inet_addr("127.0.0.1");
     char buffer[1024] = {0};
 
     // Getting the port number in order to bind it with socket listen incoming requests
@@ -19,9 +29,7 @@ int main() {
     socketH = socket(PF_INET, SOCK_STREAM, 0);
     if (socketH >= 0) {
         printf("[+] The socket is created!\n");
-        address.sin_family = AF_INET;
-        address.sin_port = htons(port);
-        address.sin_addr.s_addr = inet_addr("127.0.0.1");
+        
         int bindingStatus = bind(socketH, (struct sockaddr *) &address, sizeof(address));
         if (bindingStatus >= 0) {
             printf("[+] Binding operation is successfull!\n");
@@ -34,10 +42,10 @@ int main() {
                 while (1) {
                     int socketForTransfer = accept(socketH, NULL, NULL);
                     if (socketForTransfer >= 0) {
-                        printf("[+] Socket for data transfer is created!");
+                        printf("[+] Socket for data transfer is created!\n");
                         int reading = read(socketForTransfer, buffer, 1024);
                         printf("%s\n", buffer);
-                        send(socketForTransfer, "Hello", 5, 0);
+                        send(socketForTransfer, "Hello\n", 7, 0);
                         printf("[+] Message is sent...\n");
                         close(socketForTransfer);
                     }
