@@ -34,13 +34,15 @@ int main() {
         if (bindingStatus >= 0) {
             printf("[+] Binding operation is successfull!\n");
             // After having the successfull binding, listening starts
-            int listeningStatus = listen(socketH, 2);
+            int listeningStatus = listen(socketH, 3);
             // Testing if the listening is successfull
             if (listeningStatus >= 0) {
                 printf("[+] The socket is listening for connection...\n");
-                
+
                 while (1) {
+                    printf("We are in loop!");
                     int socketForTransfer = accept(socketH, NULL, NULL);
+                    printf("%d\n", socketForTransfer);
                     if (socketForTransfer >= 0) {
                         printf("[+] Socket for data transfer is created!\n");
                         int reading = read(socketForTransfer, buffer, 1024);
@@ -49,7 +51,7 @@ int main() {
                         printf("[+] Message is sent...\n");
                         close(socketForTransfer);
                     }
-                }    
+                }
             } else {
                 perror("[-] There is an error in listening!\n");
             }

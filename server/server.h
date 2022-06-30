@@ -2,7 +2,8 @@
 #define HEADER_FILE_NAME
 
 #include <arpa/inet.h>
-
+#include "protocols.h"
+#include "webMethods.h"
 
 typedef struct{
     short int               sin_family;
@@ -10,5 +11,10 @@ typedef struct{
     struct in_addr          sin_addr;
     unsigned char           sin_zero[8];
 } addressStruct;
+
+struct request {
+    enum protocol *protocolType;
+    enum methods *method;
+};
 
 #endif

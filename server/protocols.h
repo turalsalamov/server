@@ -1,8 +1,8 @@
 #ifndef HEADER_FILE_NAME
 #define HEADER_FILE_NAME
 
-enum Protocols {
-    HTTP = 1,
+enum protocol {
+    HTTP,
     HTTPS,
     FTP,
     SSH,
