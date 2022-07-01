@@ -3,6 +3,7 @@
 #include <sys/socket.h>
 #include <sys/types.h>
 #include "server.h"
+#include "logs.c"
 
 int main() {
 
@@ -11,11 +12,9 @@ int main() {
     protocols.c
 */
 
-
-
     // Declearing the variables
     int socketH, port;
-    addressStruct address, clientAddress;
+    addressStruct address;
     address.sin_family = AF_INET;
     address.sin_port = htons(port);
     address.sin_addr.s_addr = inet_addr("127.0.0.1");
@@ -35,19 +34,27 @@ int main() {
             printf("[+] Binding operation is successfull!\n");
             // After having the successfull binding, listening starts
             int listeningStatus = listen(socketH, 3);
-            // Testing if the listening is successfull
+
+            //LOGGING ->  Testing if the listening is successfull
+            char *listening = "Listening status: ";
+            char status = (listeningStatus + '0');
+            asInfo(listening, status, sizeof(listening));
+
+            // Accepting the connection regarding to listening status
             if (listeningStatus >= 0) {
                 printf("[+] The socket is listening for connection...\n");
-
                 while (1) {
                     printf("We are in loop!");
                     int socketForTransfer = accept(socketH, NULL, NULL);
-                    printf("%d\n", socketForTransfer);
+                    // LOGGING -> Testing if the accepting the request is successfull
+                    char *socketFT = "Transfer socket status: ";
+                    char status = (listeningStatus + '0');
+                    asInfo(socketFT, status, sizeof(socketFT));
                     if (socketForTransfer >= 0) {
                         printf("[+] Socket for data transfer is created!\n");
                         int reading = read(socketForTransfer, buffer, 1024);
                         printf("%s\n", buffer);
-                        send(socketForTransfer, "Hello\n", 7, 0);
+                        // send(socketForTransfer, "Hello\n", 7, 0);
                         printf("[+] Message is sent...\n");
                         close(socketForTransfer);
                     }
