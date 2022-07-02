@@ -1,5 +1,5 @@
-#ifndef HEADER_FILE_NAME
-#define HEADER_FILE_NAME
+#ifndef server
+#define server
 
 #include <arpa/inet.h>
 #include "protocols.h"

@@ -1,5 +1,5 @@
-#ifndef HEADER_FILE_NAME
-#define HEADER_FILE_NAME
+#ifndef protocols
+#define protocols
 
 enum protocol {
     HTTP,

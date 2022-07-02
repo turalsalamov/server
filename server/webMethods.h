@@ -1,5 +1,5 @@
-#ifndef HEADER_FILE_NAME
-#define HEADER_FILE_NAME
+#ifndef webMethods
+#define webMethods
 
 enum methods {
     GET,
