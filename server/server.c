@@ -5,6 +5,7 @@
 #include <unistd.h>
 #include "server.h"
 #include "logs.c"
+#include "webRequestParser.c"
 
 int main() {
 
@@ -24,11 +25,9 @@ int main() {
     // Creating the socket
     socketH = socket(PF_INET, SOCK_STREAM, 0);
     if (socketH >= 0) {
-        printf("[+] The socket is created!\n");
         addressLength = sizeof(hostAddress);
         int bindingStatus = bind(socketH, (struct sockaddr*)&hostAddress, addressLength);
         if (bindingStatus >= 0) {
-            printf("[+] Binding operation is successfull!\n");
 
             // After having the successfull binding, listening starts
             int listeningStatus = listen(socketH, 10);
@@ -41,8 +40,15 @@ int main() {
                 while(1) {
                     int socketForTransfer = accept(socketH, NULL, NULL);
                      if (socketForTransfer >= 0) {
-                        printf("[+] Socket for data transfer is created!\n");
                         int reading = read(socketForTransfer, buffer, 1024);
+
+                        // Identifing the type of web request
+                        int size =  methodIdentifier(buffer, sizeof(buffer));
+                        printf("The method is ");
+                        for (int i = 0; i < size; i++) {
+                            printf("%c", buffer[i]);
+                        }
+                        printf("\n");
                         printf("%s\n", buffer);
                         send(socketForTransfer, "Hello\n", 7, 0);
                         printf("[+] Message is sent...\n");
