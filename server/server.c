@@ -6,21 +6,20 @@
 #include "server.h"
 #include "logs.c"
 
-
-
 int main() {
 
     // Declearing the variables
     int socketH, port, addressLength, peerAddresslength;
     addressStruct hostAddress, peerAddress;
-    hostAddress.sin_family = AF_INET;
-    hostAddress.sin_port = htons(port);
-    hostAddress.sin_addr.s_addr = inet_addr("127.0.0.1");
     char buffer[1024] = {0};
-
     // Getting the port number in order to bind it with socket listen incoming requests
     printf("Specify the port number: ");
     scanf("%d", &port);
+
+    // Defining the host address attributes
+    hostAddress.sin_port = htons(port);
+    hostAddress.sin_family = AF_INET;
+    hostAddress.sin_addr.s_addr = inet_addr("127.0.0.1");
     
     // Creating the socket
     socketH = socket(PF_INET, SOCK_STREAM, 0);
@@ -30,16 +29,17 @@ int main() {
         int bindingStatus = bind(socketH, (struct sockaddr*)&hostAddress, addressLength);
         if (bindingStatus >= 0) {
             printf("[+] Binding operation is successfull!\n");
+
             // After having the successfull binding, listening starts
             int listeningStatus = listen(socketH, 10);
 
             // Accepting the connection regarding to listening status
             if (listeningStatus >= 0) {
-                printf("[+] The socket is listening the incoming request!\n");
-                printf("The listening Status is %d\n", listeningStatus);
-                printf("%i\n", htons(hostAddress.sin_port));
+                printf("[+] The socket is listening to %d port!\n", port);
+                
+                // Starting the loop in order to accept the requests from peers.
                 while(1) {
-                     int socketForTransfer = accept(socketH, (struct sockaddr*) &peerAddress, &peerAddresslength);
+                    int socketForTransfer = accept(socketH, NULL, NULL);
                      if (socketForTransfer >= 0) {
                         printf("[+] Socket for data transfer is created!\n");
                         int reading = read(socketForTransfer, buffer, 1024);
