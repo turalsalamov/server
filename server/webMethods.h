@@ -1,5 +1,5 @@
-#ifndef webMethods
-#define webMethods
+#ifndef WEBMETHODS_H
+#define WEBMETHODS_H
 
 enum methods {
     GET,
@@ -9,5 +9,13 @@ enum methods {
     PUT,
     OPTION
 };
+
+typedef struct {
+
+    enum methods;
+    char *path;
+    char *host;
+
+} request;
 
 #endif

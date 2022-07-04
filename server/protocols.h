@@ -1,5 +1,5 @@
-#ifndef protocols
-#define protocols
+#ifndef PROTOCOLS_H
+#define PROTOCOLS_H
 
 enum protocol {
     HTTP,

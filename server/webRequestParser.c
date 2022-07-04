@@ -6,6 +6,7 @@ int count = 0;
 char *requestPointer = "";
 
 int  methodIdentifier(char *request, size_t size){
+    count = 0;
     requestPointer = request;
     for (int i = 0; i < size; i++) {
         if (request[i] == ' ') {
@@ -13,34 +14,43 @@ int  methodIdentifier(char *request, size_t size){
         }
         count++;
     }
+
+    // constructingTheRequestObject();
     return count;
-
-    // printf("[+] We identified the method!");
-
-    // Here is the method struct creation with enum based on the extracted method name
-    // if (strcmp(method, "GET") == 0) {
-    //     return "It GET request";
-    // }else {
-    //     if (strcmp(method, "POST") == 0) {
-    //         return "It POST request";
-    //     } else {
-    //         if (strcmp(method, "PUT") == 0) {
-    //             return "It PUT request";
-    //         } else {
-    //             if (strcmp(method, "DELETE") == 0) {
-    //                 return "It DELETE request";
-    //             } else {
-    //                 if (strcmp(method, "UPDATE") == 0) {
-    //                     return "It UPDATE request";
-    //                 }else {
-    //                     if (strcmp(method, "OPTION") == 0) {
-    //                         return "It OPTION request";
-    //                     } 
-    //                 }
-    //             }
-    //         }
-    //     }
-    // }
-
-    // return "It is not a web request";
 }
+
+
+// This will be written after creating the custom data to have dynamically resizable data structure
+
+// request constructingTheRequestObject() {
+
+//     // Here is the method struct creation with enum based on the extracted method name
+//     if (strcmp(method, "GET") == 0) {
+//         return "It GET request";
+//     }else {
+//         if (strcmp(method, "POST") == 0) {
+//             return "It POST request";
+//         } else {
+//             if (strcmp(method, "PUT") == 0) {
+//                 return "It PUT request";
+//             } else {
+//                 if (strcmp(method, "DELETE") == 0) {
+//                     return "It DELETE request";
+//                 } else {
+//                     if (strcmp(method, "UPDATE") == 0) {
+//                         return "It UPDATE request";
+//                     }else {
+//                         if (strcmp(method, "OPTION") == 0) {
+//                             return "It OPTION request";
+//                         } 
+//                     }
+//                 }
+//             }
+//         }
+//     }
+
+
+//     request peerRequest = {};
+
+//     return peerRequest;
+// }

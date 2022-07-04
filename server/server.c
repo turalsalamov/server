@@ -7,7 +7,7 @@
 #include "logs.c"
 #include "webRequestParser.c"
 
-int main() {
+void runningServerUp() {
 
     // Declearing the variables
     int socketH, port, addressLength, peerAddresslength;
@@ -66,6 +66,5 @@ int main() {
     } else {
         perror("[-] There is a problem with socket!\n");
     }
-    return 0;
 }
 
