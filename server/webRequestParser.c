@@ -1,4 +1,5 @@
 #include <stdio.h>
+#include <stdlib.h>
 #include "webMethods.h"
 #include "../include/dynamicArray.c" 
 
@@ -8,15 +9,18 @@ char *requestPointer = "";
 int  methodIdentifier(char *request, size_t size){
     count = 0;
     requestPointer = request;
-    charArray arr = {.letter = '_', .element = NULL};
+    charArray *arr;
+    arr = malloc(sizeof(charArray));
     for (int i = 0; i < size; i++) {
         if (request[i] == ' ') {
             break;
         }
-        append(&arr, request[i]);
+        int success = append(arr, *(request + i));
+        // printf("The first letter is %c\n", arr->letter);
         count++;
     }
-    printTheArray(&arr);
+    
+    // printTheArray(arr);
 
     // constructingTheRequestObject();
     return count;

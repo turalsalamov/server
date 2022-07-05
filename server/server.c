@@ -43,14 +43,13 @@ void runningServerUp() {
                         int reading = read(socketForTransfer, buffer, 1024);
 
                         // Identifing the type of web request
-                        printf("The method is ");
                         int size =  methodIdentifier(buffer, sizeof(buffer));
 
-                        for (int i = 0; i < size; i++) {
-                            printf("%c", buffer[i]);
-                        }
+                        // Printing the whole request
                         printf("\n");
                         printf("%s\n", buffer);
+
+                        // Sending reponse to the connected peer
                         send(socketForTransfer, "Hello\n", 7, 0);
                         printf("[+] Message is sent...\n");
                         close(socketForTransfer);

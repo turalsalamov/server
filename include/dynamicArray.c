@@ -8,26 +8,25 @@ typedef struct charArray {
 } charArray;
 
 
+
 int append(charArray *array, char letterOfWord) {
-
-    charArray checker = {.letter = '_', .element = NULL};
-    if (array -> element -> letter != checker.letter && array -> element -> element != checker.element) {
-        array = array -> element;
-        append(array -> element, letterOfWord);
+    if (array != NULL) {
+        printf("letters %c\n", array->letter);
+        append(array->element, letterOfWord);
     }
-
-    *(array -> element) = (charArray){.letter = letterOfWord, .element = NULL};
-
-    return 1; 
+    charArray *new = NULL;
+    new = malloc(sizeof(charArray));
+    new->letter = letterOfWord;
+    new->element = NULL;
+    array = new;
+    return 1;
 }
 
 void printTheArray(charArray *array) {
-    
-    charArray checker = {.letter = '_', .element = NULL};
-
-    if (array -> element -> letter != checker.letter && array -> element -> element != checker.element) {
-        printf("%c", array -> letter);
-        printTheArray(array -> element);
+    printf("The method is \n");
+    if (array != NULL) {
+        printf("%c\n", array->letter);
+        printTheArray(array->element);
     }
-
+    printf("\n");
 }
