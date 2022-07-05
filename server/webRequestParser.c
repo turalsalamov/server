@@ -1,6 +1,6 @@
 #include <stdio.h>
 #include "webMethods.h"
-#include <string.h>
+#include "../include/dynamicArray.c" 
 
 int count = 0;
 char *requestPointer = "";
@@ -8,12 +8,15 @@ char *requestPointer = "";
 int  methodIdentifier(char *request, size_t size){
     count = 0;
     requestPointer = request;
+    charArray arr = {.letter = '_', .element = NULL};
     for (int i = 0; i < size; i++) {
         if (request[i] == ' ') {
             break;
         }
+        append(&arr, request[i]);
         count++;
     }
+    printTheArray(&arr);
 
     // constructingTheRequestObject();
     return count;

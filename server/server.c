@@ -43,8 +43,9 @@ void runningServerUp() {
                         int reading = read(socketForTransfer, buffer, 1024);
 
                         // Identifing the type of web request
-                        int size =  methodIdentifier(buffer, sizeof(buffer));
                         printf("The method is ");
+                        int size =  methodIdentifier(buffer, sizeof(buffer));
+
                         for (int i = 0; i < size; i++) {
                             printf("%c", buffer[i]);
                         }

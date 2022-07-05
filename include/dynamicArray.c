@@ -2,30 +2,32 @@
 // This data structure is written in order to store string and the size will not be decleared beforehand
 
 
-typedef struct {
+typedef struct charArray {
     char letter;
-    charArray element;
+    struct charArray *element;
 } charArray;
 
 
-int append(charArray array, char letter) {
-    charArray *last = reachToTheEnd(&array);
-    last->letter = letter;
-    charArray new = {.letter = "", .element = NULL};
-    last->element = new;
-}
+int append(charArray *array, char letterOfWord) {
 
-
-charArray *reachToTheEnd(charArray *array) {
-    charArray checker = {.letter = "", .element = NULL};
-    if (array->element != checker) {
-        reachToTheEnd(*array->element);
-    }else {
-        return &array->element;
+    charArray checker = {.letter = '_', .element = NULL};
+    if (array -> element -> letter != checker.letter && array -> element -> element != checker.element) {
+        array = array -> element;
+        append(array -> element, letterOfWord);
     }
-    return &checker;
+
+    *(array -> element) = (charArray){.letter = letterOfWord, .element = NULL};
+
+    return 1; 
 }
 
-void printTheArray(charArray array) {
+void printTheArray(charArray *array) {
     
+    charArray checker = {.letter = '_', .element = NULL};
+
+    if (array -> element -> letter != checker.letter && array -> element -> element != checker.element) {
+        printf("%c", array -> letter);
+        printTheArray(array -> element);
+    }
+
 }

@@ -12,7 +12,7 @@ enum methods {
 
 typedef struct {
 
-    enum methods;
+    enum methods method;
     char *path;
     char *host;
 
