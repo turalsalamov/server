@@ -5,24 +5,40 @@
 #include "../include/dynamicArray.c"
 
 
-// There is a memory issue in heap
 
-void theRequest(charArray *arr);
+// Initializing global variables for use
+int count = 0; // It is the size of the request typw
+char *requestPointer = NULL; // It handles the incoming peer request
 
-int count = 0;
-char *requestPointer = NULL;
+
+
+// It will iterate over the linked list and get all the characters in order to build a char array
+void theRequest(charArray *arr) {
+    char array[count]; // Initializes the char array to accept the letters
+    int counter = 0; // It will be used to add the elements to array
+    charArray *element = NULL;
+    element = malloc(sizeof(charArray));
+    for (element = arr; element != NULL; element = element->element){
+        array[counter] = element->letter; // Assigning the letters to char array
+        counter++;
+    }
+    
+    printf("The method is %s", array);
+    
+}
+
+
 
 int  methodIdentifier(char *request, size_t size){
     count = 0;
     requestPointer = request;
     charArray *arr = NULL;
-    arr = malloc(sizeof(charArray));
     printf("Request 0 is %c\n", request[0]);
     for (int i = 0; i < size; i++) {
         if (request[i] == ' ') {
             break;
         }
-        append(arr, *(request + i));
+        append(&arr, *(request + i));
         count++;
     }
     theRequest(arr);
@@ -30,20 +46,6 @@ int  methodIdentifier(char *request, size_t size){
 }
 
 
-void theRequest(charArray *arr) {
-    char array[count];
-    int counter = 0;
-    charArray *element = NULL;
-    element = malloc(sizeof(charArray));
-    for (element = arr; element != NULL; element = element->element){
-        array[counter] = element->letter;
-        printf("struct %c\n", element->letter);
-        // printf("char %c", array[counter]);
-        counter++;
-    }
-    printf("char %c", array[1]);
-    printf("The method is %ld\n", sizeof(array));
-}
 // This will be written after creating the custom data to have dynamically resizable data structure
 
 // request constructingTheRequestObject() {
