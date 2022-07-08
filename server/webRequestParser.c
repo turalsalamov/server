@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 #include "webMethods.h"
 #include "../include/dynamicArray.h"
 #include "../include/dynamicArray.c"
@@ -10,6 +11,34 @@
 int count = 0; // It is the size of the request typw
 char *requestPointer = NULL; // It handles the incoming peer request
 
+
+void test(const char *methodName) {
+    printf("The string is %s", methodName);
+    if (strcmp(methodName, "GET") == 0) {
+        printf("The method name is %s\n", methodName);
+        printf("It is GET method\n");
+    }else if (strcmp(methodName, "POST") == 0) {
+        printf("The method name is %s\n", methodName);
+        printf("It is POST method\n");
+    }else if (strcmp(methodName, "PUT") == 0) {
+        printf("The method name is %s\n", methodName);
+        printf("It is PUT method\n");
+    }else if (strcmp(methodName, "UPDATE") == 0) {
+        printf("The method name is %s\n", methodName);
+        printf("It is UPDATE method\n");
+    }else if (strcmp(methodName, "DELETE") == 0) {
+        printf("The method name is %s\n", methodName);
+        printf("It is DELETE method\n");
+    }else if (strcmp(methodName, "OPTION") == 0) {
+        printf("The method name is %s\n", methodName);
+        printf("It is OPTION method\n");
+    }
+
+    
+
+
+
+}
 
 
 // It will iterate over the linked list and get all the characters in order to build a char array
@@ -23,7 +52,7 @@ void theRequest(charArray *arr) {
         counter++;
     }
     
-    printf("The method is %s", array);
+    test(array);
     
 }
 
@@ -33,7 +62,6 @@ int  methodIdentifier(char *request, size_t size){
     count = 0;
     requestPointer = request;
     charArray *arr = NULL;
-    printf("Request 0 is %c\n", request[0]);
     for (int i = 0; i < size; i++) {
         if (request[i] == ' ') {
             break;
@@ -41,9 +69,13 @@ int  methodIdentifier(char *request, size_t size){
         append(&arr, *(request + i));
         count++;
     }
+    printf("The size is %d\n", count);
     theRequest(arr);
     return count;
 }
+
+
+
 
 
 // This will be written after creating the custom data to have dynamically resizable data structure
