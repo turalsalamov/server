@@ -1,16 +1,17 @@
-#ifndef WEBMETHODS_H
-#define WEBMETHODS_H
+#ifndef REQUESTS_H
+#define REQUESTS_H
 
 enum methods {
     GET,
     POST,
     DELETE,
-    UPDATE,
+    PATCH,
     PUT,
-    OPTIONS
+    OPTIONS,
+    ERROR
 };
 
-typedef struct {
+typedef struct request{
 
     enum methods method;
     char *path;

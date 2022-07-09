@@ -43,7 +43,7 @@ void runningServerUp() {
                         int reading = read(socketForTransfer, buffer, 1024);
 
                         // Identifing the type of web request
-                        int size =  methodIdentifier(buffer, sizeof(buffer));
+                        methodIdentifier(buffer, sizeof(buffer));
 
                         // Printing the whole request
                         printf("\n");
