@@ -7,7 +7,7 @@ enum methods {
     DELETE,
     UPDATE,
     PUT,
-    OPTION
+    OPTIONS
 };
 
 typedef struct {

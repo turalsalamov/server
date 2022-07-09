@@ -13,22 +13,26 @@ In both situations, we will link a new created node to the last item.
 // If the word consists of 5 letters first two letters will be ok, third one will be overwritten by next letters.
 // By correcting the implementation it will work properly
 
+// address -> address -> actual value
+
 void append(charArray **array, char letterOfWord) {
-    if(*array) {
-        charArray* tmp;
+    if (*array) {
+        charArray *tmp = NULL;
         if((*array)->element) {
             tmp = (*array)->element;
+            append(&tmp, letterOfWord);
+            return;
         } else {
             tmp = (*array);
         }
         charArray *new = malloc(sizeof(charArray));
         new->letter = letterOfWord;
         new->element = NULL;
-        (tmp)->element = new;
+        tmp->element = new;
     } else {
         charArray *new = malloc(sizeof(charArray));
         new->letter = letterOfWord;
         new->element = NULL;
-        *array = new;        
-    }    
+        *array = new;
+    }
 }
