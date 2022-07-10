@@ -14,8 +14,8 @@ enum methods {
 typedef struct request{
 
     enum methods method;
-    char *path;
-    char *host;
+    const char *path;
+    const char *host;
 
 } request;
 

@@ -8,8 +8,8 @@
 
 
 // Initializing global variables for use
-int count = 0; // It is the size of the request typw
-char *requestPointer = NULL; // It handles the incoming peer request
+int methodCount = 0; // It is the size of the request method
+int pathCount = 0; // It is the size of the request method
 
 const char* methodNameStringify(enum methods method) {
     if (method == 0) {
@@ -29,7 +29,7 @@ const char* methodNameStringify(enum methods method) {
     return "The method have not set properly!";
 }
 
-request constructRequest(const char *methodName) {
+request constructRequest(const char *methodName, const char *requestedPath) {
     enum methods method;
     if (strcmp(methodName, "GET") == 0) {
         method = GET;
@@ -51,38 +51,50 @@ request constructRequest(const char *methodName) {
     } else {
         method = ERROR;
     }
-
-    request requestInfo = {.method = method, .host = "localhost", .path = "/alma"};
+    request requestInfo = {.method = method, .host = "localhost", .path = requestedPath};
     return requestInfo;
 }
 
 // It will iterate over the linked list and get all the characters in order to build a char array
-request getRequest(charArray *arr) {
-    char array[count]; // Initializes the char array to accept the letters
-    int counter = 0; // It will be used to add the elements to array
-    charArray *arrayElement = NULL;
-    for (arrayElement = arr; arrayElement != NULL; arrayElement = arrayElement->element){
-        array[counter] = arrayElement->letter; // Assigning the letters to char array
-        counter++;
-    }
+request getRequest(charArray *methodArr, charArray *pathArr) {
+    char methodArray[methodCount]; // Initializes the char array to accept the letters
+    char pathArray[pathCount];
+    int methodCounter = 0; // It will be used to add the elements to array
+    int pathCounter = 0; // It will be used to add the elements to array
     
-    return constructRequest(array);
+    for (charArray *methodElement = methodArr; methodElement!= NULL; methodElement = methodElement->element){
+        methodArray[methodCounter] = methodElement->letter; // Assigning the letters to char array
+        methodCounter++;
+    }
+    for (charArray *arrayElement = pathArr; arrayElement != NULL; arrayElement = arrayElement->element){
+        pathArray[pathCounter] = arrayElement->letter; // Assigning the letters to char array
+        pathCounter++;
+    }
+    return constructRequest(methodArray, pathArray);
 }
 
 
 // It will give the information about with which method it is requested by peer.
 void  methodIdentifier(char *incomningRequest, size_t size){
-    count = 0;
-    requestPointer = incomningRequest;
-    charArray *arr = NULL;
+    int flag = 0;
+    methodCount = 0;
+    pathCount = 0;
+    charArray *method = NULL;
+    charArray *path = NULL;
     for (int i = 0; i < size; i++) {
-        if (incomningRequest[i] == ' ') {
-            count = i;
+        if (incomningRequest[i] == ' ' && !flag) {
+            methodCount = i;
+            flag = 1;
+            continue;
+        }
+        if (incomningRequest[i] == ' ' && flag) {
+            pathCount = i - methodCount;
             break;
         }
-        append(&arr, *(incomningRequest + i));
+        if (!flag) append(&method, *(incomningRequest + i));
+        else append(&path, *(incomningRequest + i));
     }
-    request peerRequest = getRequest(arr);
+    request peerRequest = getRequest(method, path);
     printf("[INFO] Method: %s, Host: %s, Path: %s", methodNameStringify(peerRequest.method),
                                                      peerRequest.host, peerRequest.path);
 }
