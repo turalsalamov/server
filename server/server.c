@@ -4,7 +4,6 @@
 #include <sys/types.h>
 #include <unistd.h>
 #include "server.h"
-#include "logs.c"
 #include "webRequestParser.c"
 
 void runningServerUp() {
@@ -51,7 +50,7 @@ void runningServerUp() {
 
                         // Sending reponse to the connected peer
                         send(socketForTransfer, "Hello\n", 7, 0);
-                        printf("[+] Message is sent...\n");
+                        // printf("[+] Message is sent...\n");
                         close(socketForTransfer);
                     } else {
                         perror("There is a problem");
