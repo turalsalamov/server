@@ -9,7 +9,7 @@
 void runningServerUp() {
 
     // Declearing the variables
-    int socketH, port, addressLength, peerAddresslength;
+    int socketH, port, addressLength;
     addressStruct hostAddress, peerAddress;
     char buffer[1024] = {0};
     // Getting the port number in order to bind it with socket listen incoming requests
@@ -37,12 +37,14 @@ void runningServerUp() {
                 
                 // Starting the loop in order to accept the requests from peers.
                 while(1) {
-                    int socketForTransfer = accept(socketH, NULL, NULL);
-                     if (socketForTransfer >= 0) {
+                    // The peerAddress is used in order to get the datas of peer who is connected and requested
+                    int socketForTransfer = accept(socketH, (struct sockaddr*)&peerAddress, 
+                                                            (socklen_t*)&addressLength);
+                    if (socketForTransfer >= 0) {
                         int reading = read(socketForTransfer, buffer, 1024);
-
+                        char *peer = inet_ntoa(peerAddress.sin_addr);
                         // Identifing the type of web request
-                        requestHandler(buffer, sizeof(buffer));
+                        requestHandler(buffer, peer, sizeof(buffer));
 
                         // Printing the whole request
                         printf("\n");

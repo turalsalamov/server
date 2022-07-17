@@ -84,7 +84,7 @@ const char *getPath(charArray *pathArr) {
 }
 
 // It will give the information about with which method it is requested by peer.
-void  requestHandler(char *incomningRequest, size_t size) {
+void  requestHandler(char *incomningRequest, char *peerAddress, size_t size) {
     int flag = 0;
     methodCount = 0;
     pathCount = 0;
@@ -109,7 +109,7 @@ void  requestHandler(char *incomningRequest, size_t size) {
     enum methods methodName = getMethod(method);
     const char *pathName = getPath(path);
 
-    request peerRequest = {.method = methodName, .host = "localhost", .path = pathName};
+    request peerRequest = {.method = methodName, .host = peerAddress, .path = pathName};
 
     // Printing the logs in terminal
     requestLogging(methodNameStringify(peerRequest.method), peerRequest.path, peerRequest.host);
