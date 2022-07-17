@@ -11,7 +11,7 @@ enum methods {
     ERROR
 };
 
-typedef struct request{
+typedef struct {
 
     enum methods method;
     const char *path;

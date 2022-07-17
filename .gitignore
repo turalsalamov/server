@@ -54,3 +54,5 @@ dkms.conf
 # Ignored folders in project 
 .vscode/
 
+# Ignoring the binary
+/main
